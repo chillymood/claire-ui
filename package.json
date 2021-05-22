@@ -13,10 +13,10 @@
     "UI",
     "React"
   ],
-  "homepage": "https://chillymood.github.io/",
+  "homepage": "https://chillymood.github.io/claire-ui",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chillymood/chillymood.github.io.git"
+    "url": "https://github.com/chillymood/claire-ui.git"
   },
   "files": [
     "dist"
@@ -26,6 +26,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "^0.1.8",
     "axios": "^0.19.1",
+    "claire-ui": "^0.1.2",
     "classnames": "^2.2.6",
     "node-sass": "^4.14.1",
     "react-transition-group": "^4.3.0"
