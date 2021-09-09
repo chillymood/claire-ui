@@ -1,7 +1,11 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { AutoComplete, DataSourceType } from "./autoComplete";
+import {
+  AutoComplete,
+  DataSourceType,
+  AutoCompleteProps,
+} from "./autoComplete";
 interface LakerPlayerProps {
   value: string;
   number: number;
@@ -198,3 +202,28 @@ storiesOf("AutoComplete", module)
   .add("異步請求Github用戶名", ajaxComplete, {
     info: { source: false, text: textAjax },
   });
+
+export default {
+  title: "Components/AutoComplete",
+  component: AutoComplete,
+} as Meta;
+
+const Template: Story<AutoCompleteProps> = (args) => <AutoComplete {...args} />;
+
+export const Primary = Template.bind({});
+
+Primary.args = {
+  alertType: "default",
+  closable: true,
+  title: "我是標題",
+  description: "我是描述",
+  onClose: action("我按了關閉"),
+};
+
+export const StylesAlert = Template.bind({});
+
+StylesAlert.args = {
+  ...Primary.args,
+  alertType: "warning",
+  closable: false,
+};

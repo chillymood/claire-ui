@@ -47,7 +47,9 @@
     "build-css": "node-sass ./src/styles/index.scss ./dist/index.css",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "storybook-docs": "start-storybook --docs --no-manager-cache",
+    "build-storybook-docs": "build-storybook --docs"
   },
   "husky": {
     "hooks": {
@@ -71,6 +73,7 @@
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.3.8",
+    "@storybook/addon-essentials": "^6.3.8",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^6.3.8",
     "@storybook/addons": "^6.3.8",
