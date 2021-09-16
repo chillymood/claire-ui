@@ -3,6 +3,9 @@ import React, {
   ReactElement,
   InputHTMLAttributes,
   ChangeEvent,
+  RefObject,
+  forwardRef,
+  LegacyRef,
 } from "react";
 import classNames from "classnames";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -26,49 +29,62 @@ export interface InputProps
 }
 
 /**
- * Input 輸入框 通過鼠標或鍵盤輸入內容，
- * 支持 HTMLInput 的所有基本属性
+ * 輸入框，可以帶圖標或前後綴、禁用、支持 HTMLInput 的所有基本属性
  * 
- *### 引用方法
  * ~~~js
  * import { Input } from 'claire-ui'
  * ~~~
  
  */
-export const Input: FC<InputProps> = (props) => {
-  const { disabled, size, icon, prepend, append, style, ...restProps } = props;
+export const Input = forwardRef<RefObject<HTMLInputElement>, InputProps>(
+  (props, ref) => {
+    const {
+      disabled,
+      size,
+      icon,
+      prepend,
+      append,
+      style,
+      ...restProps
+    } = props;
 
-  const cnames = classNames("input-wrapper", {
-    [`input-size-${size}`]: size,
-    "is-disabled": disabled,
-    "input-group": prepend || append,
-    "input-group-append": !!append,
-    "input-group-prepend": !!prepend,
-  });
-  const fixControlledValue = (value: any) => {
-    if (typeof value === "undefined" || value === null) {
-      return "";
+    const cnames = classNames("input-wrapper", {
+      [`input-size-${size}`]: size,
+      "is-disabled": disabled,
+      "input-group": prepend || append,
+      "input-group-append": !!append,
+      "input-group-prepend": !!prepend,
+    });
+    const fixControlledValue = (value: any) => {
+      if (typeof value === "undefined" || value === null) {
+        return "";
+      }
+      return value;
+    };
+    //檢查value是否存在
+    if ("value" in props) {
+      //移除屬性
+      delete restProps.defaultValue;
+      restProps.value = fixControlledValue(props.value);
     }
-    return value;
-  };
-  //檢查value是否存在
-  if ("value" in props) {
-    //移除屬性
-    delete restProps.defaultValue;
-    restProps.value = fixControlledValue(props.value);
+    return (
+      <div className={cnames} style={style}>
+        {prepend && <div className="input-group-prepend">{prepend}</div>}
+        {icon && (
+          <div className="icon-wrapper">
+            <Icon icon={icon} title={`title-${icon}`} />
+          </div>
+        )}
+        <input
+          className="input-inner"
+          disabled={disabled}
+          ref={ref as LegacyRef<HTMLInputElement>}
+          {...restProps}
+        />
+        {append && <div className="input-group-append">{append}</div>}
+      </div>
+    );
   }
-  return (
-    <div className={cnames} style={style}>
-      {prepend && <div className="input-group-prepend">{prepend}</div>}
-      {icon && (
-        <div className="icon-wrapper">
-          <Icon icon={icon} title={`title-${icon}`} />
-        </div>
-      )}
-      <input className="input-inner" disabled={disabled} {...restProps} />
-      {append && <div className="input-group-append">{append}</div>}
-    </div>
-  );
-};
+);
 
 export default Input;

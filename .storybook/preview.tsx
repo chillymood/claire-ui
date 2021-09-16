@@ -23,7 +23,7 @@ const wrapperStyle: React.CSSProperties = {
 export const decorators = [
   (Story) => (
     <div style={wrapperStyle}>
-      <h3>Component display</h3>
+      {/* <h3>Component display</h3> */}
       <Story />
     </div>
   ),

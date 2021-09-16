@@ -1,29 +1,30 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import Tabs from "./tabs";
-import TabItem from "./tabItem";
+import Tabs, { TabsProps } from "./tabs";
+import TabItem, { TabItemProps } from "./tabItem";
 import Icon from "../Icon";
-const defaultTabs = () => (
-  <Tabs onSelect={action("selected")}>
-    <TabItem label="選項卡一">this is content one</TabItem>
-    <TabItem label="選項卡二">this is content two</TabItem>
-    <TabItem label="用戶管理">this is content three</TabItem>
+
+const defaultTabs = (args: TabsProps) => (
+  <Tabs {...args} onSelect={action("selected")}>
+    <TabItem label="Tab1">this is content one</TabItem>
+    <TabItem label="Tab2">this is content two</TabItem>
+    <TabItem label="Tab3">this is content three</TabItem>
   </Tabs>
 );
 
-const cardTabs = () => (
+export const cardTabs = () => (
   <Tabs onSelect={action("selected")} type="card">
     <TabItem label="card1">this is card one</TabItem>
-    <TabItem label="card2">this is content two</TabItem>
+    <TabItem label="card2">this is card two</TabItem>
     <TabItem label="disabled" disabled>
       this is content three
     </TabItem>
   </Tabs>
 );
 
-const customTabs = () => (
+export const customTabs = () => (
   <Tabs onSelect={action("selected")} type="card">
     <TabItem
       label={
@@ -37,7 +38,10 @@ const customTabs = () => (
     <TabItem label="tab2">this is content two</TabItem>
   </Tabs>
 );
-storiesOf("Tabs", module)
-  .add("Tabs", defaultTabs)
-  .add("選項卡樣式的Tabs", cardTabs)
-  .add("自定義選項卡樣式", customTabs);
+export default {
+  title: "Components/Tabs",
+  component: Tabs,
+} as Meta;
+
+const Template: Story<TabsProps> = (args) => defaultTabs(args);
+export const Primary = Template.bind({});

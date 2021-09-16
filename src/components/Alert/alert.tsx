@@ -21,11 +21,12 @@ export interface AlertProps {
 export type AlertType = "success" | "default" | "danger" | "warning";
 
 /**
- * 用於頁面中展示重要的提示訊息，點擊右上角的X自動消失。
- * 引用方法
+ * 警示視窗，點擊右上角的x視窗消失，可以設定是否顯示X，關閉Alert時觸發的事件。
+ *
  *
  * ~~~js
- * import { Button } from 'claire-ui'
+ * import { Alert } from 'claire-ui'
+ *
  * ~~~
  */
 export const Alert: FC<AlertProps> = (props) => {

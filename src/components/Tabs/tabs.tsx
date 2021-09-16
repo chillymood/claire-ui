@@ -20,17 +20,22 @@ export interface TabsProps {
 }
 
 /**
- * 提供平級的區域將大塊內容進行收納和展現，保持界面整潔。
- * ### 引用方法
+ * 題供區塊展示內容，支持自定義圖標。
  *
  * ~~~js
- * import { Button } from 'claire-ui'
+ * import { Tabs , TabItem } from 'claire-ui'
  * ~~~
  */
 
 export const Tabs: FC<TabsProps> = (props) => {
-  const { defaultIndex, className, onSelect, type, children, ...restProps } =
-    props;
+  const {
+    defaultIndex,
+    className,
+    onSelect,
+    type,
+    children,
+    ...restProps
+  } = props;
 
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
 
@@ -79,7 +84,6 @@ Tabs.defaultProps = {
   defaultIndex: 0,
   type: "line",
   className: "iamclassname",
-  // onSelect:(3)=>
 };
 
 export default Tabs;

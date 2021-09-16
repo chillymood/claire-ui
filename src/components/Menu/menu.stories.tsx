@@ -1,27 +1,50 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import Menu from "./index";
+import Menu, { SubMenu } from "./index";
+import { MenuProps } from "./menu";
+import MenuItem, { MenuItemProps } from "./menuItem";
 
-export const defaultMenu = () => (
-  <Menu defaultIndex="0" onSelect={action("selected!")}>
-    <Menu.Item>cool link</Menu.Item>
-    <Menu.Item>cool link 2</Menu.Item>
-    <Menu.Item disabled>disabled</Menu.Item>
-    <Menu.SubMenu title="下拉選項">
-      <Menu.Item>下拉選項一</Menu.Item>
-      <Menu.Item>下拉選項二</Menu.Item>
-    </Menu.SubMenu>
+const defaultMenu = (args: MenuProps, menuItem: MenuItemProps) => (
+  <Menu {...args} defaultIndex="0" onSelect={action("selected!")}>
+    <MenuItem {...menuItem}>主選單1</MenuItem>
+    <MenuItem {...menuItem}>主選單2</MenuItem>
+    <MenuItem {...menuItem} disabled>
+      主選單3
+    </MenuItem>
+    <SubMenu title="下拉選單">
+      <MenuItem {...menuItem}>下拉選單1</MenuItem>
+      <MenuItem {...menuItem}>下拉選單2</MenuItem>
+    </SubMenu>
   </Menu>
 );
-export const clickMenu = () => (
+
+export default {
+  title: "Components/Menu",
+  component: Menu,
+  arg: {
+    defaultIndex: "0",
+    mode: "horizontal",
+  },
+} as Meta;
+
+const TemplateMenuItem: Story<MenuItemProps> = (args) => <MenuItem {...args} />;
+const PrimaryMenuItem = TemplateMenuItem.bind({});
+PrimaryMenuItem.args = {};
+
+const Template: Story<MenuProps> = (args) =>
+  defaultMenu(args, PrimaryMenuItem.args as MenuItemProps);
+
+export const Primary = Template.bind({});
+
+const verticalMenu = () => (
   <Menu defaultIndex="0" onSelect={action("selected!")} mode="vertical">
-    <Menu.Item>cool link</Menu.Item>
-    <Menu.Item>cool link 2</Menu.Item>
-    <Menu.SubMenu title="點擊下拉選項">
-      <Menu.Item>下拉選項一</Menu.Item>
-      <Menu.Item>下拉選項二</Menu.Item>
-    </Menu.SubMenu>
+    <MenuItem>cool link</MenuItem>
+    <MenuItem>cool link 2</MenuItem>
+    <SubMenu title="點擊下拉選項">
+      <MenuItem>下拉選項一</MenuItem>
+      <MenuItem>下拉選項二</MenuItem>
+    </SubMenu>
   </Menu>
 );
 export const openedMenu = () => (
@@ -31,16 +54,11 @@ export const openedMenu = () => (
     mode="vertical"
     defaultOpenSubMenus={["2"]}
   >
-    <Menu.Item>cool link</Menu.Item>
-    <Menu.Item>cool link 2</Menu.Item>
-    <Menu.SubMenu title="默認展開下拉選項">
-      <Menu.Item>下拉選項一</Menu.Item>
-      <Menu.Item>下拉選項二</Menu.Item>
-    </Menu.SubMenu>
+    <MenuItem>cool link</MenuItem>
+    <MenuItem>cool link 2</MenuItem>
+    <SubMenu title="默認展開下拉選項">
+      <MenuItem>下拉選項一</MenuItem>
+      <MenuItem>下拉選項二</MenuItem>
+    </SubMenu>
   </Menu>
 );
-
-storiesOf("Menu", module)
-  .add("Menu", defaultMenu)
-  .add("縱向的 Menu", clickMenu)
-  .add("默認展開的縱向 Menu", openedMenu);

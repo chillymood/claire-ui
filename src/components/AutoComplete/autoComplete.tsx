@@ -16,11 +16,14 @@ import useClickOutside from "../../hooks/useClickOutside";
 interface DataSourceObject {
   value: string;
 }
-//做個一個泛型物件，會有value值。
+//一個泛型物件，一定要有value值。
 export type DataSourceType<T = {}> = T & DataSourceObject;
 export interface AutoCompleteProps extends Omit<InputProps, "onSelect"> {
   /**
    * 返回輸入建議的方法，可以拿到當前的输入，返回同步的數組或者是異步的 Promise
+   * interface DataSourceObject {
+       value: string;
+    }
    * type DataSourceType<T = {}> = T & DataSourceObject
    */
   fetchSuggestions: (
@@ -28,24 +31,53 @@ export interface AutoCompleteProps extends Omit<InputProps, "onSelect"> {
   ) => DataSourceType[] | Promise<DataSourceType[]>;
   /** 點擊選中建議選項時觸發的回調*/
   onSelect?: (item: DataSourceType) => void;
-  //!!!
   /**支持自定義渲染下拉項，返回 ReactElement */
   renderOption?: (item: DataSourceType) => ReactElement;
 }
 
 /**
- * 輸入框自動完成功能。當輸入值需要自動完成時使用，支持同步和異步兩種方式
- * 支持 Input 組件的所有屬性，支持鍵盤事件選擇
- * ### 引用方法
+ * 輸入框需要自動完成時使用，支持鍵盤操作、支持同步數組和異步Promise兩種資料來源、可以自定義下拉選單樣式、並支持input HTML標籤的所有屬性。
+ 
  *
  * ~~~js
  * import { AutoComplete } from 'claire-ui'
+  const handleFetch = (query: string) => {
+    return fetch(`https://api.github.com/search/users?q=${query}`)
+      .then((res) => res.json())
+      .then(({ items }) => {
+        return items
+          .slice(0, 10)
+          .map((item: any) => ({ value: item.login, url: item.url }));
+      });
+};
+
+const renderOption = (item: DataSourceType) => {
+    const itemWithNumber = item as DataSourceType<GithubUserProps>;
+    return (
+      <>
+        <b>name: {itemWithNumber.value}</b>&emsp;
+        <span>github: {itemWithNumber.url}</span>
+      </>
+  );
+};
+  
+    <AutoComplete
+      fetchSuggestions={handleFetch}
+      onSelect={action('selected')}
+      placeholder="輸入github用戶名試試"
+      renderOption = {renderOption}
+    />
  * ~~~
  */
 
 export const AutoComplete: FC<AutoCompleteProps> = (props) => {
-  const { fetchSuggestions, onSelect, value, renderOption, ...restProps } =
-    props;
+  const {
+    fetchSuggestions,
+    onSelect,
+    value,
+    renderOption,
+    ...restProps
+  } = props;
 
   const [inputValue, setInputValue] = useState(value as string);
   const [suggestions, setSugestions] = useState<DataSourceType[]>([]);

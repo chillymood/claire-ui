@@ -3,6 +3,8 @@ import axios from "axios";
 import UploadList from "./uploadList";
 import Dragger from "./dragger";
 export type UploadFileStatus = "ready" | "uploading" | "success" | "error";
+
+//定義上傳文件所需屬性
 export interface UploadFile {
   uid: string;
   size: number;
@@ -19,7 +21,7 @@ export interface UploadProps {
   /**上傳的文件列表,*/
   defaultFileList?: UploadFile[];
   /**上傳文件之前的鉤子，參數為上傳的文件，若返回 false 或者 Promise 則停止上傳。 */
-  //提供給用戶驗證使用
+  //給用戶驗證使用
   beforeUpload?: (file: File) => boolean | Promise<File>;
   /**文件上傳時的鉤子 */
   onProgress?: (percentage: number, file: UploadFile) => void;
@@ -48,8 +50,7 @@ export interface UploadProps {
 }
 
 /**
- * 通過點擊或者拖曳上傳文件
- * ### 引用方法
+ * 通過點擊或者拖曳上傳文件，支持各操作階段的回調函數以及自訂http headers、withCredentials等訊息。
  *
  * ~~~js
  * import { Upload } from 'claire-ui'
@@ -81,10 +82,11 @@ export const Upload: FC<UploadProps> = (props) => {
   const updateFileList = (
     updateFile: UploadFile,
     updateObj: Partial<UploadFile>
-    //可以更新裡面所有屬性，都是可選的
+    //可以更新UploadFile裡面所有屬性，都是可選的
   ) => {
     setFileList((prevList) => {
       return prevList.map((file) => {
+        //如果有相等就更新
         if (file.uid === updateFile.uid) {
           return { ...file, ...updateObj };
         } else {
@@ -118,6 +120,7 @@ export const Upload: FC<UploadProps> = (props) => {
     }
   };
   const uploadFiles = (files: FileList) => {
+    //FileList是類陣列
     let postFiles = Array.from(files);
     postFiles.forEach((file) => {
       if (!beforeUpload) {
@@ -147,7 +150,9 @@ export const Upload: FC<UploadProps> = (props) => {
       return [_file, ...prevList];
     });
     const formData = new FormData();
+    //追加新值到 FormData 物件已有的對應鍵上；若該鍵不存在，則為其追加新的鍵
     formData.append(name || "file", file);
+    //如果有需要上傳的key value一起加入
     if (data) {
       Object.keys(data).forEach((key) => {
         formData.append(key, data[key]);

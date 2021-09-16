@@ -5,6 +5,8 @@ import React, {
   useRef,
   FunctionComponentElement,
   useEffect,
+  Ref,
+  RefObject,
 } from "react";
 import classNames from "classnames";
 import Input from "../Input";
@@ -28,6 +30,7 @@ export interface SelectProps {
   onChange?: (selectedValue: string, selectedValues: string[]) => void;
   /**下拉框出现/隱藏时觸發 */
   onVisibleChange?: (visible: boolean) => void;
+  Option?: any;
 }
 
 export interface ISelectContext {
@@ -40,13 +43,11 @@ export const SelectContext = createContext<ISelectContext>({
   selectedValues: [],
 });
 /**
- * 下拉選擇器。
- * 弹出一個下拉菜單给用戶選擇操作，用於代替原生的選擇器，或者需要一個更優雅的多選器時。
- * ### 引用方法
+ * 下拉選單，有單選和複選功能。
  *
  * ~~~js
- * import { Select } from 'claire-ui'
- * // 然后可以使用 <Select> 和 <Select.Option>
+ * import { Select , Option } from 'claire-ui'
+ *
  * ~~~
  */
 export const Select: FC<SelectProps> = (props) => {
@@ -71,7 +72,7 @@ export const Select: FC<SelectProps> = (props) => {
     typeof defaultValue === "string" ? defaultValue : ""
   );
   const handleOptionClick = (value: string, isSelected?: boolean) => {
-    // update value
+    //更新單選值
     if (!multiple) {
       setOpen(false);
       setValue(value);
@@ -82,8 +83,8 @@ export const Select: FC<SelectProps> = (props) => {
       setValue("");
     }
     let updatedValues = [value];
-    // click again to remove selected when is multiple mode
     if (multiple) {
+      // 是被選中就刪掉，非選被選中就選中。
       updatedValues = isSelected
         ? selectedValues.filter((v) => v !== value)
         : [...selectedValues, value];
@@ -94,7 +95,6 @@ export const Select: FC<SelectProps> = (props) => {
     }
   };
   useEffect(() => {
-    // focus input
     if (input.current) {
       input.current.focus();
       if (multiple && selectedValues.length > 0) {
@@ -106,8 +106,7 @@ export const Select: FC<SelectProps> = (props) => {
   }, [selectedValues, multiple, placeholder]);
   useEffect(() => {
     if (containerRef.current) {
-      containerWidth.current =
-        containerRef.current.getBoundingClientRect().width;
+      containerWidth.current = containerRef.current.getBoundingClientRect().width;
     }
   });
   useClickOutside(containerRef, () => {
@@ -153,13 +152,13 @@ export const Select: FC<SelectProps> = (props) => {
     <div className={containerClass} ref={containerRef}>
       <div className="select-input" onClick={handleClick}>
         <Input
-          // ref={input}
           placeholder={placeholder}
           value={value}
           readOnly
           icon="angle-down"
           disabled={disabled}
           name={name}
+          ref={input}
         />
       </div>
       <SelectContext.Provider value={passedContext}>

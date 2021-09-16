@@ -12,23 +12,32 @@ interface BaseButtonProps {
   size?: ButtonSize;
   /**設置 Button 的類型 */
   btnType?: ButtonType;
+  /**設置 中間的 的文字 */
   children: React.ReactNode;
+  /**設置 按鈕的 連結    */
   href?: string;
 }
 type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
 type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 /**
- * 頁面中最常用的按鈕元素，適合於完成特定的交互，支持HTML按鈕和一個鏈接的所有屬性。
- * ### 引用方法
- *
+ * 按鈕，支持HTML標籤button和a的所有屬性。
+ * 
+ 
  * ~~~js
  * import { Button } from 'claire-ui'
  * ~~~
  */
 export const Button: FC<ButtonProps> = (props) => {
-  const { btnType, className, disabled, size, children, href, ...restProps } =
-    props;
+  const {
+    btnType,
+    className,
+    disabled,
+    size,
+    children,
+    href,
+    ...restProps
+  } = props;
   // btn, btn-lg, btn-primary
   const classes = classNames("btn", className, {
     [`btn-${btnType}`]: btnType,

@@ -1,5 +1,5 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { Story, Meta } from "@storybook/react";
 
 const markdownText = `
 
@@ -28,17 +28,47 @@ import { Button } from 'claire-ui'
 ~~~
 `;
 
-storiesOf("Welcome page", module).add(
-  "welcome",
-  () => {
-    return (
-      <>
-        {/* <h1>歡迎來到claire-ui組件庫</h1>
-        <p>
-          本組件庫含有各種前端開發用得到的組件、除了基本的menu選單、select下拉式組件、AutoComplete自動完成組件以外，比較有趣的還有Upload支持拖動的檔案上傳，組件內都提供了豐富的回調函數供使用，歡迎多加利用。
-        </p> */}
-      </>
-    );
-  },
-  { info: { text: markdownText, source: false } }
+// storiesOf("Welcome page", module).add(
+//   "welcome",
+//   () => {
+//     return (
+//       <>
+//         {/* <h1>歡迎來到claire-ui組件庫</h1>
+//         <p>
+//           本組件庫含有各種前端開發用得到的組件、除了基本的menu選單、select下拉式組件、AutoComplete自動完成組件以外，比較有趣的還有Upload支持拖動的檔案上傳，組件內都提供了豐富的回調函數供使用，歡迎多加利用。
+//         </p> */}
+//       </>
+//     );
+//   },
+//   { info: { text: markdownText, source: false } }
+// );
+
+const text = () => (
+  <div>
+    <h1>歡迎來到claire-ui組件庫</h1>
+    <p>
+      本組件庫含有各種前端開發用得到的組件、除了基本的menu選單、select下拉式組件、AutoComplete自動完成組件以外，比較有趣的還有Upload支持拖動的檔案上傳，組件內都提供了豐富的回調函數供使用，歡迎多加利用。
+    </p>
+  </div>
 );
+
+export default {
+  title: "Welcome page",
+  decorators: [
+    // (Story) => (
+    //   <div style={{ margin: "3em" }}>
+    //     <div>
+    //       <h1>歡迎來到claire-ui組件庫</h1>
+    //       <p>
+    //         本組件庫含有各種前端開發用得到的組件、除了基本的menu選單、select下拉式組件、AutoComplete自動完成組件以外，比較有趣的還有Upload支持拖動的檔案上傳，組件內都提供了豐富的回調函數供使用，歡迎多加利用。
+    //       </p>
+    //     </div>
+    //     <Story />
+    //   </div>
+    // ),
+  ],
+} as Meta;
+
+const Template: Story = (args) => text();
+
+export const Primary = Template.bind({});

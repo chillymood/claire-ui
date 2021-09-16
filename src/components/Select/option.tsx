@@ -32,6 +32,7 @@ export const Option: FC<SelectOptionProps> = ({
   ) => {
     e.preventDefault();
     if (onSelect && !disabled) {
+      //呼叫父層的handleOptionClick
       onSelect(value, isSelected);
     }
   };
@@ -43,6 +44,7 @@ export const Option: FC<SelectOptionProps> = ({
         handleClick(e, value, isSelected);
       }}
     >
+      {/* 選項內容 */}
       {children || (label ? label : value)}
       {multiple && isSelected && <Icon icon="check" />}
     </li>
