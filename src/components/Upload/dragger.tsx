@@ -25,11 +25,11 @@ export const Dragger: FC<DraggerProps> = (props) => {
       className={klass}
       onDragOver={(e) => {
         handleDrag(e, true);
-      }}
+      }} //拖進移動時
       onDragLeave={(e) => {
         handleDrag(e, false);
-      }}
-      onDrop={handleDrop}
+      }} //拖離時
+      onDrop={handleDrop} //釋放鼠標時
     >
       {children}
     </div>

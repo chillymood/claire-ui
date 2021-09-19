@@ -24,10 +24,10 @@ interface IMenuContext {
 
 export const MenuContext = createContext<IMenuContext>({ index: "0" });
 /**
- * 為網站提供導航功能的菜單，支持橫向縱向兩種模式，可以使用 Menu.Item 和 Menu.Submenu 訪問選項和子下拉菜單組件
- * ~~~js
- * import { Menu } from 'claire-ui'
+ * 導航列，支持橫向縱向兩種模式，MenuItem是選項 和 Submenu是次選單
  *
+ * ~~~js
+ * import { Menu , MenuItem , SubMenu  } from 'claire-ui'
  * ~~~
  */
 export const Menu: FC<MenuProps> = (props) => {
@@ -40,7 +40,6 @@ export const Menu: FC<MenuProps> = (props) => {
     onSelect,
     defaultOpenSubMenus,
   } = props;
-  debugger;
   const [currentActive, setActive] = useState(defaultIndex);
   const classes = classNames("menu", className, {
     "menu-vertical": mode === "vertical",
@@ -59,11 +58,13 @@ export const Menu: FC<MenuProps> = (props) => {
     defaultOpenSubMenus,
   };
   const renderChildren = () => {
+    //遍歷每個子組件
     return React.Children.map(children, (child, index) => {
-      const childElement =
-        child as React.FunctionComponentElement<MenuItemProps>;
+      const childElement = child as React.FunctionComponentElement<MenuItemProps>;
       const { displayName } = childElement.type;
+
       if (displayName === "MenuItem" || displayName === "SubMenu") {
+        //子組件名稱正確則添加新的props
         return React.cloneElement(childElement, {
           index: index.toString(),
         });

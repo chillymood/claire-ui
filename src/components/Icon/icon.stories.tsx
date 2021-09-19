@@ -1,7 +1,26 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
-import Icon from "./icon";
+import { Story, Meta } from "@storybook/react";
+import Icon, { IconProps } from "./icon";
 import Button from "../Button";
+
+const customIcons = (args: IconProps) => (
+  <>
+    <Icon {...args} theme="primary" spin />
+  </>
+);
+
+export default {
+  title: "Components/Icon",
+  component: Icon,
+  args: {
+    icon: "spinner",
+    size: "3x",
+  },
+} as Meta;
+
+const Template: Story<IconProps> = (args) => customIcons(args);
+
+export const Primary = Template.bind({});
 
 const markdownText = `
 提供了一套常用的圖標集合 基于 react-fontawesome。
@@ -16,19 +35,7 @@ import { Icon } from 'claire-ui'
 ~~~
 `;
 
-const defaultIcons = () => (
-  <>
-    <Icon icon="check" size="3x" />
-    <Icon icon="times" size="3x" />
-    <Icon icon="anchor" size="3x" />
-    <Icon icon="trash" size="3x" />
-    {/* <Button size="lg" btnType="primary">
-      <Icon icon="check" /> check{" "}
-    </Button> */}
-  </>
-);
-
-const themeIcons = () => (
+export const themeIcons = () => (
   <>
     <Icon icon="check" size="3x" theme="success" />
     <Icon icon="times" size="3x" theme="danger" />
@@ -37,18 +44,11 @@ const themeIcons = () => (
   </>
 );
 
-const customIcons = () => (
+export const defaultIcons = () => (
   <>
-    <Icon icon="spinner" size="3x" theme="primary" spin />
-    <Icon icon="spinner" size="3x" theme="success" pulse />
+    <Icon icon="check" size="3x" />
+    <Icon icon="times" size="3x" />
+    <Icon icon="anchor" size="3x" />
+    <Icon icon="trash" size="3x" />
   </>
 );
-
-storiesOf("Icon", module)
-  .add("Icon", defaultIcons, { info: { text: markdownText } })
-  .add("不同主题的 Icon", themeIcons, { info: { text: markdownText } })
-  .add("更多行為的 Icon", customIcons, {
-    info: {
-      text: "更多範例請參考：https://github.com/FortAwesome/react-fontawesome#basic",
-    },
-  });

@@ -1,45 +1,48 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { Story, Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
+import Select, { SelectProps } from "./select";
+import Option from "./option";
 
-import Select from "./index";
-const defaultSelect = () => (
+export const defaultSelect = (arg: SelectProps) => (
   <Select
-    placeholder="請選擇"
+    {...arg}
+    placeholder="請選擇幾個你可能有興趣的人"
     onChange={action("changed")}
     onVisibleChange={action("visible")}
   >
-    <Select.Option value="nihao" />
-    <Select.Option value="nihao2" />
-    <Select.Option value="nihao3" />
-    <Select.Option value="disabled" disabled />
-    <Select.Option value="nihao5" />
+    <Option value="claire" />
+    <Option value="john" />
+    <Option value="marry" />
+    <Option value="fanny" disabled />
+    <Option value="jack" />
   </Select>
 );
-const multipleSelect = () => (
-  <Select
-    placeholder=""
-    onChange={action("changed")}
-    onVisibleChange={action("visible")}
-    multiple
-  >
-    <Select.Option value="nihao" />
-    <Select.Option value="nihao2" />
-    <Select.Option value="nihao3" />
-    <Select.Option value="nihao4" />
-    <Select.Option value="nihao5" />
-  </Select>
-);
+export default {
+  title: "Components/Select",
+  component: Select,
+  args: {
+    multiple: true,
+  },
+} as Meta;
 
-const disabledSelect = () => (
+const Template: Story<SelectProps> = (args) => defaultSelect(args);
+
+export const singleSelection = () => (
+  <Select placeholder="只能選擇一個你最喜歡的人">
+    <Option value="claire" />
+    <Option value="john" />
+    <Option value="marry" />
+    <Option value="fanny" disabled />
+    <Option value="jack" />
+  </Select>
+);
+export const disabledSelect = () => (
   <Select placeholder="禁用啦！" disabled>
-    <Select.Option value="nihao" />
-    <Select.Option value="nihao2" />
-    <Select.Option value="nihao3" />
+    <Option value="claire" />
+    <Option value="john" />
+    <Option value="marry" />
+    <Option value="fanny" disabled />
+    <Option value="jack" />
   </Select>
 );
-
-storiesOf("Select", module)
-  .add("Select", defaultSelect)
-  .add("支持多選的 Select", multipleSelect)
-  .add("被禁用的 Select", disabledSelect);
