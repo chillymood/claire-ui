@@ -6,6 +6,7 @@ import {
   DataSourceType,
   AutoCompleteProps,
 } from "./autoComplete";
+import Input from "../Input";
 interface SeatNumberTableProps {
   value: string;
   number: number;
@@ -241,6 +242,7 @@ const item = [
 export default {
   title: "Components/AutoComplete",
   component: AutoComplete,
+  subcomponents: { Input },
   args: {
     placeholder: "輸入Github用戶名試試看",
     fetchSuggestions: handleFetch,

@@ -1,6 +1,7 @@
 const loaderFn = () => {
   return [
     "../src/welcome.stories.tsx",
+    "../src/components/Carousel/carousel.stories.tsx",
     "../src/components/Upload/upload.stories.tsx",
     "../src/components/AutoComplete/autoComplete.stories.tsx",
 
