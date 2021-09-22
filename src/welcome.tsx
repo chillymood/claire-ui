@@ -61,7 +61,7 @@ export const Welcome: FC = () => {
   return (
     <>
       <div id="fb-root"></div>
-      <div id="fb-customer-chat" className="fb-customerchat"></div>)
+      <div id="fb-customer-chat" className="fb-customerchat"></div>
     </>
   );
 };
