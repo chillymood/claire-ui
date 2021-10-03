@@ -1,10 +1,9 @@
 const loaderFn = () => {
   return [
     "../src/welcome.stories.tsx",
-    "../src/components/Carousel/carousel.stories.tsx",
+    // "../src/components/Carousel/carousel.stories.tsx",
     "../src/components/Upload/upload.stories.tsx",
     "../src/components/AutoComplete/autoComplete.stories.tsx",
-
     "../src/components/Select/select.stories.tsx",
     "../src/components/Menu/menu.stories.tsx",
     "../src/components/Tabs/tabs.stories.tsx",
