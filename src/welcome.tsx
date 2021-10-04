@@ -31,9 +31,13 @@ const loadFBChatPlugin = () => {
         
 本組件庫有前端開發能用得到的組件，特色是提供了豐富的回調函數供使用。
 以下簡單介紹
+*
 * Upload-點擊或者拖曳上傳文件，支持各操作階段的回調函數。
+*
 * AutoComplete-輸入框需要自動完成時使用，支持鍵盤操作、支持同步數組和異步Promise兩種資料來源、可以自定義下拉選單樣式、並支持input HTML標籤的所有屬性。
+*
 * Select-支持複選的下拉式選單。
+*
 * Menu-支持縱向與橫向。
         
 ### 安裝試試
@@ -50,8 +54,6 @@ import 'claire-ui/dist/index.css'
 // 引入組件
 import { Button } from 'claire-ui'
 ~~~
- *
- * ~~~
  */
 export const Welcome: FC = () => {
   useEffect(() => {
